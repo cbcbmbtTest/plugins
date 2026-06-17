@@ -1,0 +1,10 @@
+{
+  "name": "FacadeConfigurator",
+  "slug": "facadeconfigurator",
+  "description": "Fassadenkonfiguration tool",
+  "path": "/facadeconfigurator/",
+  "url": "",
+  "tech": "html",
+  "version": "1.0.0",
+  "port": null
+}
