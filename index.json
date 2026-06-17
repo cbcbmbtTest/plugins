@@ -1,2 +1,12 @@
-{"generatedAt":"2026-06-17T10:13:30Z","apps":[
+{"generatedAt":"2026-06-17T11:13:29Z","apps":[
+{
+  "name": "FacadeConfigurator",
+  "slug": "facadeconfigurator",
+  "description": "Fassadenkonfiguration tool",
+  "path": "/facadeconfigurator/",
+  "url": "",
+  "tech": "html",
+  "version": "1.0.0",
+  "port": null
+}
 ]}
