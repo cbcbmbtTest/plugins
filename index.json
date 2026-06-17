@@ -1,4 +1,4 @@
-{"generatedAt":"2026-06-17T11:13:29Z","apps":[
+{"generatedAt":"2026-06-17T12:17:08Z","apps":[
 {
   "name": "FacadeConfigurator",
   "slug": "facadeconfigurator",
@@ -6,7 +6,7 @@
   "path": "/facadeconfigurator/",
   "url": "",
   "tech": "html",
-  "version": "1.0.0",
+  "version": "v.1.0.2",
   "port": null
 }
 ]}
