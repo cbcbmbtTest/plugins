@@ -5,8 +5,6 @@
 #
 # GITEA MIGRATION:
 # - Replace ubuntu-latest with self-hosted runner name
-# - Replace stefanzweifel action with Gitea equivalent
-#   or use plain git commands to commit
 # ============================================================
 
 name: Generate index.json
@@ -15,20 +13,18 @@ on:
   push:
     branches: [main]
     paths:
-      - '*.json'  # only triggers when a json file changes
+      - '*.json'
 
 jobs:
   generate:
-    # GITEA: replace with self-hosted runner name
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout plugins repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REGISTRY_TOKEN }}
 
-      # ── Validate all json files ───────────────────────────
-      # Checks every json file is valid before combining
-      # Skips index.json itself
       - name: Validate json files
         run: |
           for f in *.json; do
@@ -37,10 +33,6 @@ jobs:
             echo "✅ $f valid"
           done
 
-      # ── Generate index.json ───────────────────────────────
-      # Reads all *.json files except index.json
-      # Combines into one index.json
-      # Adds generatedAt timestamp
       - name: Generate index.json
         run: |
           echo '{"generatedAt":"'$(date -u +%Y-%m-%dT%H:%M:%SZ)'","apps":[' > index.json
@@ -54,17 +46,12 @@ jobs:
           echo "✅ index.json generated"
           cat index.json
 
-      # ── Commit index.json ─────────────────────────────────
-      # Commits and pushes updated index.json
-      # [skip ci] prevents infinite trigger loop
-      # GITEA: replace with plain git commands if needed:
-      # git config user.email "ci@company.de"
-      # git config user.name "CI/CD Bot"
-      # git add index.json
-      # git commit -m "chore: regenerate index.json [skip ci]"
-      # git push
       - name: Commit index.json
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: regenerate index.json [skip ci]"
-          file_pattern: index.json
+        env:
+          TOKEN: ${{ secrets.REGISTRY_TOKEN }}
+        run: |
+          git config user.email "ci@company.de"
+          git config user.name "CI/CD Bot"
+          git add index.json
+          git diff --staged --quiet || git commit -m "chore: regenerate index.json [skip ci]"
+          git push https://x-token:$TOKEN@github.com/cbcbmbtTest/plugins main
